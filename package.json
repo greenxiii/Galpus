@@ -9,7 +9,6 @@
     "gulp-less": "^3.0.3",
     "gulp-notify": "^2.2.0",
     "gulp-plumber": "^1.0.1",
-    "gulp-rename": "^1.2.2",
     "gulp-uglify": "^1.5.1",
     "imagemin-pngquant": "^4.2.0"
   }

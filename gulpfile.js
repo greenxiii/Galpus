@@ -6,7 +6,6 @@ var gulp = require('gulp'),
     path = require('path'),
     beep = require('beepbeep'),
     cssmin = require('gulp-cssmin'),
-    rename = require('gulp-rename'),
     htmlmin = require('gulp-htmlmin'),
     uglify = require('gulp-uglify'),
     imagemin = require('gulp-imagemin'),
@@ -17,7 +16,7 @@ var onError = function (err) {
     console.log(err);
 };
 
-gulp.task('styles', function() {
+gulp.task('styles-compile', function() {
     gulp.src('less/global.less')
         .pipe(plumber({
             errorHandler: onError
@@ -27,31 +26,28 @@ gulp.task('styles', function() {
         }))
         .pipe(autoprefixer('last 2 version'))
         .pipe(gulp.dest('css'))
+        .pipe(notify({ message: 'Styles-compile task complete' }));
+});
+
+gulp.task('styles-minify', function() {
+    gulp.src('css/global.css')
         .pipe(cssmin())
-        .pipe(rename({suffix: '.min'}))
-        .pipe(gulp.dest('css'))
-        .pipe(notify({ message: 'Styles task complete' }));
+        .pipe(gulp.dest('dist/css'))
+        .pipe(notify({ message: 'Styles-minify task complete' }));
 });
 
 gulp.task('html', function() {
-    gulp.src('index.html')
+    gulp.src('*.html')
         .pipe(htmlmin({collapseWhitespace: true}))
-        .pipe(rename({suffix: '.min'}))
-        .pipe(gulp.dest(''))
+        .pipe(gulp.dest('dist'))
         .pipe(notify({ message: 'Html task for index complete' }));
 
-    gulp.src('thankyou.html')
-        .pipe(htmlmin({collapseWhitespace: true}))
-        .pipe(rename({suffix: '.min'}))
-        .pipe(gulp.dest(''))
-        .pipe(notify({ message: 'Html task for thankyou complete' }));
 });
 
 gulp.task('javaScript', function() {
     return gulp.src('js/main.js')
         .pipe(uglify())
-        .pipe(rename({suffix: '.min'}))
-        .pipe(gulp.dest('js'))
+        .pipe(gulp.dest('dist/js'))
         .pipe(notify({ message: 'javaScript task complete' }));
 });
 
@@ -62,13 +58,13 @@ gulp.task('images', function() {
             svgoPlugins: [{removeViewBox: false}],
             use: [pngquant()]
         }))
-        .pipe(gulp.dest('images/compressed'))
+        .pipe(gulp.dest('dist/images'))
         .pipe(notify({ message: 'Image task complete' }));
 });
 
-gulp.task('default', ['build', 'watch']);
+gulp.task('default', ['styles-compile', 'watch']);
 
-gulp.task('build', ['styles', 'html', 'javaScript', 'images']);
+gulp.task('build', ['styles-compile', 'styles-minify', 'html', 'javaScript', 'images']);
 
 gulp.task('watch', function() {
   gulp.watch('less/*.less', ['styles']);
