@@ -8,9 +8,10 @@ Today, it's includes:
  5. Png minimizer
 
 In feature commits I will add:
- 1. Haml processing for views 
+ 1. Haml processing for views
  2. Coffe Script processing for Js
- 3. Make and use this template as Yeoman scafold
+ 3. Add gulp server
+ 4. Make and use this template as Yeoman scafold
 
 ***
 
