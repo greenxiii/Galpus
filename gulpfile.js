@@ -29,7 +29,7 @@ gulp.task('styles-compile', function() {
         .pipe(notify({ message: 'Styles-compile task complete' }));
 });
 
-gulp.task('styles-minify', function() {
+gulp.task('styles-minify', ['styles-compile'], function() {
     gulp.src('css/global.css')
         .pipe(cssmin())
         .pipe(gulp.dest('dist/css'))
@@ -64,7 +64,7 @@ gulp.task('images', function() {
 
 gulp.task('default', ['styles-compile', 'watch']);
 
-gulp.task('build', ['styles-compile', 'styles-minify', 'html', 'javaScript', 'images']);
+gulp.task('build', ['styles-minify', 'html', 'javaScript', 'images']);
 
 gulp.task('watch', function() {
   gulp.watch('less/*.less', ['styles']);
