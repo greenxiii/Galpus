@@ -1,4 +1,6 @@
 .idea
-css/*
+css
+js
 node_modules
 dist
+lib
