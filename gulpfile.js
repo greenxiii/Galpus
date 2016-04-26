@@ -44,7 +44,7 @@ gulp.task('styles-compile', function() {
 gulp.task('styles-minify', ['styles-compile'], function() {
     gulp.src('css/global.css')
         .pipe(cssmin())
-        .pipe(gulp.dest('dist/css'))
+        .pipe(gulp.dest('css/min'))
         .pipe(notify({ message: 'Styles-minify task complete' }));
 });
 
@@ -69,7 +69,7 @@ gulp.task('coffee-compile', function() {
 gulp.task('javaScript-uglify', ['coffee-compile'], function() {
     return gulp.src('js/main.js')
         .pipe(uglify())
-        .pipe(gulp.dest('dist/js'))
+        .pipe(gulp.dest('js/min'))
         .pipe(notify({ message: 'javaScript-uglify task complete' }));
 });
 
@@ -80,7 +80,7 @@ gulp.task('images', function() {
             svgoPlugins: [{removeViewBox: false}],
             use: [pngquant()]
         }))
-        .pipe(gulp.dest('dist/images'))
+        .pipe(gulp.dest('images/compiled'))
         .pipe(notify({ message: 'Image task complete' }));
 });
 
