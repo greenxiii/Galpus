@@ -15,6 +15,6 @@ In feature commits I will add:
  2. Make and use this template as Yeoman scafold
 
 ***
-Firstly you need to run "nmp install" and "bower install",  than:
+Firstly you need to run "npm install" and "bower install",  than:
  - For production build run command "gulp build"
  - For starting dev watcher run "gulp"
