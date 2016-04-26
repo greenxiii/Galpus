@@ -17,4 +17,4 @@ In feature commits I will add:
 ***
 Firstly you need to run "npm install" and "bower install",  than:
  - For production build run command "gulp build"
- - For starting dev watcher run "gulp"
+ - For starting dev watcher with browser-sync and karma tests run "gulp serve"

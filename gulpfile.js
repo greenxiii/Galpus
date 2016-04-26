@@ -92,7 +92,7 @@ gulp.task('images', function() {
         .pipe(notify({ message: 'Image task complete' }));
 });
 
-gulp.task('default', ['styles-compile', 'coffee-compile', 'tests', 'watch']);
+gulp.task('serve', ['styles-compile', 'coffee-compile', 'tests', 'watch']);
 
 gulp.task('build', ['styles-minify', 'html', 'javaScript-uglify', 'images']);
 
