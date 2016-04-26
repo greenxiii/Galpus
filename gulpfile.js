@@ -12,7 +12,8 @@ var gulp = require('gulp'),
     pngquant = require('imagemin-pngquant'),
     coffee = require('gulp-coffee'),
     exec = require('child_process').exec,
-    bs = require('browser-sync').create();
+    bs = require('browser-sync').create(),
+    KarmaServer = require('karma').Server;
 
 var onError = function (err) {
     beep();
@@ -26,6 +27,13 @@ gulp.task('browser-sync', ['coffee-compile', 'styles-compile'], function() {
         },
         // proxy: "yourwebsite.com" 
     });
+});
+
+gulp.task('tests', function(done){
+    return new KarmaServer({
+        configFile: __dirname + '/karma.local.conf.js',
+        singleRun: true
+    }, done).start();
 });
 
 gulp.task('styles-compile', function() {
@@ -84,13 +92,14 @@ gulp.task('images', function() {
         .pipe(notify({ message: 'Image task complete' }));
 });
 
-gulp.task('default', ['styles-compile', 'coffee-compile', 'watch']);
+gulp.task('default', ['styles-compile', 'coffee-compile', 'tests', 'watch']);
 
 gulp.task('build', ['styles-minify', 'html', 'javaScript-uglify', 'images']);
 
 gulp.task('watch', ['browser-sync'], function() {
   gulp.watch('less/*.less', ['styles-compile', bs.reload]);
-  gulp.watch('coffee/*.coffee', ['coffee-compile', bs.reload]);
+  gulp.watch('coffee/*.coffee', ['coffee-compile']);
+  gulp.watch('js/*.js', [ 'tests', bs.reload]);
   gulp.watch('*.html').on('change', bs.reload);
 });
 
